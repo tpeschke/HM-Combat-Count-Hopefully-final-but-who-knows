@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Counter from "./1G/Counter"
-import Combatants from "./1G/Combatants"
 
 class App extends Component {
+  constructor() {
+    super()
+  }
+
   render() {
     return (
-      <div>
+      <div className="maindiv">
         <Counter />
       </div>
     );

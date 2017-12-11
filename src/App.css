@@ -1,0 +1,13 @@
+.input {
+    display: inline-block;
+    min-width: 75px;
+}
+
+.maindiv {
+    padding: 25px auto
+}
+
+.counter {
+    margin: 15px auto;
+    background: lightyellow;
+}
