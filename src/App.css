@@ -8,10 +8,17 @@ body {
 }
 
 .maindiv {
-    padding: 25px auto
+    padding: 25px auto;
+    
 }
 
 .counter {
     margin: 15px auto;
     background: lightyellow;
+}
+
+.input {
+    min-width: 150px;
+    max-width: 150px;
+    margin: 5px 0;
 }

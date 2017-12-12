@@ -13,6 +13,7 @@ export default class Acting extends Component {
     }
 
     stopTime() {
+        console.log(this.state.autoTimer1)
         clearInterval(this.state.autoTimer1);
     }
 
