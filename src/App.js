@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Counter from "./1G/Counter"
+import MainBody from "./1G/2G/MainBody"
 
 class App extends Component {
-  constructor() {
-    super()
-  }
 
   render() {
     return (
       <div className="maindiv">
-        <Counter />
+        <MainBody />
       </div>
     );
   }

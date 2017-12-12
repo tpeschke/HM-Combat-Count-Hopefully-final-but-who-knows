@@ -1,3 +1,7 @@
+body {
+    margin: 75px;
+}
+
 .input {
     display: inline-block;
     min-width: 75px;
