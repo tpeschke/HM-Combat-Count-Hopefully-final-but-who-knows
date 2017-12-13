@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Modal from 'react-responsive-modal';
 
 import Acting from "./3G/Acting";
 import Benched from "./3G/Benched";
@@ -12,16 +11,16 @@ export default class MainBody extends Component {
 
         this.state = {
             fighterTotal:
-                [{ name: "Ragnar", speed: 5, action: 17, top: false, acting: true, dead: false },
+                [{ name: "Ragnar", speed: 5, action: 17, top: true, acting: true, dead: false },
                 { name: "Robert", speed: 7, action: 10, top: false, acting: true, dead: false },
-                { name: "Sir William", speed: 15, action: 25, top: false, acting: true, dead: true },
+                { name: "Sir William", speed: 15, action: 25, top: true, acting: true, dead: true },
                 { name: "Ulrich VonLichstein", speed: 10, action: 1, top: false, acting: true, dead: false }],
             fighterActive: [],
             fighterBench: [],
             graveyard: [],
             count: 1,
             actionHold: 0,
-            open: false
+            topAmount: 0,
         }
         this.sort = this.sort.bind(this)
         this.decreaseSpeed = this.decreaseSpeed.bind(this)
@@ -32,7 +31,8 @@ export default class MainBody extends Component {
         this.resurrect = this.resurrect.bind(this)
         this.matchAction = this.matchAction.bind(this)
         this.handleHoldAction = this.handleHoldAction.bind(this)
-        this.triggerToP = this.triggerToP.bind(this)
+        this.onCloseModal = this.onCloseModal.bind(this)
+        this.onOpenModal = this.onOpenModal.bind(this)
     }
 
     componentDidMount() {
@@ -40,11 +40,6 @@ export default class MainBody extends Component {
     }
 
     sort() {
-        // this.state.fighterTotal.forEach( val => {
-        //     if (val.dead === true){
-        //         this.state.graveyard.push(val)
-        //     }
-        // })
 
         let sortedFigh = this.state.fighterTotal.sort((a, b) => a.action - b.action);
         this.setState({ fighterTotal: sortedFigh });
@@ -52,7 +47,8 @@ export default class MainBody extends Component {
         this.state.fighterTotal.forEach(val => {
             if (val.action > this.state.count) {
                 val.acting = false
-            } else (val.acting = true)
+                val.top = false
+            } else {val.acting = true}
         })
 
         var newBench = [];
@@ -108,26 +104,29 @@ export default class MainBody extends Component {
     }
 
     handleHoldAction(e) {
-        this.setState( { actionHold: e } )
+        this.setState({ actionHold: e })
     }
 
-    matchAction(f) {
+    matchAction(f, input) {
         this.state.fighterTotal.forEach(val => {
             if (val.name === f.name) {
-                val.action = +this.state.actionHold
+                val.action = +input
             }
         })
-        // this.setState( { actionHold: 0 } )
-        setTimeout(this.sort(),1000);   
+        this.sort();
     }
 
     //===================================================================================================
     //                                      ToP
     //===================================================================================================
 
-    triggerToP() {
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
 
-    }
+    onCloseModal = () => {
+        this.setState({ open: false });
+    };
 
 
     //====================================================================================================
@@ -156,7 +155,9 @@ export default class MainBody extends Component {
     //
     //=====================================================================================================
     render() {
+
         return (
+
             <div>
                 <Counter
                     increaseSpeed={this.increaseSpeed}
@@ -169,17 +170,20 @@ export default class MainBody extends Component {
                         active={this.state.fighterActive}
                         fighterSpeed={this.fighterSpeed}
                         murder={this.murder}
-                        handleHoldAction = {this.handleHoldAction}
-                        matchAction = {this.matchAction}  />
+                        handleHoldAction={this.handleHoldAction}
+                        matchAction={this.matchAction}
+                        sort={this.sort} />
                     <Benched
                         benched={this.state.fighterBench}
                         fighterSpeed={this.fighterSpeed}
                         murder={this.murder}
-                        handleHoldAction = {this.handleHoldAction}
-                        matchAction = {this.matchAction} />
+                        handleHoldAction={this.handleHoldAction}
+                        matchAction={this.matchAction}
+                        sort={this.sort} />
                     <Graveyard
                         graveyard={this.state.graveyard}
                         resurrect={this.resurrect} />
+
                 </div>
             </div>
         )

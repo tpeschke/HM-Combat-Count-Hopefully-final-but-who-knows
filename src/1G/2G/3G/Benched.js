@@ -1,12 +1,44 @@
 import React, { Component } from 'react';
+import Modal from 'react-responsive-modal';
 
 export default class Benched extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            topAmount: 0,
+            open: false,
+            fighterCell: {}
+        }
+    }
+
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+        this.props.benched.forEach(val => {
+                if (val.name === this.state.fighterCell.name) {
+                    val.action = val.action + (this.state.topAmount * 3 )
+                    val.top = true
+                }
+            })
+            this.props.sort()
+    };
+
+    handleToP(d) {
+        this.onOpenModal()
+        this.setState( { fighterCell: d } )
+    }
 
 
     render() {
 
-        var fightersBenched = this.props.benched.map(d => {
-            return <div key={d.name} className='fighter'>
+        const { open } = this.state;
+
+        var fightersBenched = this.props.benched.map((d, i) => {
+            return <div key={d.name + i + "benched"} className='fighter'>
 
                 <p className="input">
                     {d.name}</p>
@@ -17,11 +49,10 @@ export default class Benched extends Component {
 
                 <input className="input"
                     placeholder={d.action}
-                    onChange={e => this.props.handleHoldAction(e.target.value)}
-                    onBlur={_ => this.props.matchAction(d)} />
+                    onBlur={(e) => this.props.matchAction(d, e.target.value)} />
 
                 <button className="input"
-                    onClick={_ => this.props.ToP(d)} >
+                    onClick={_ => this.handleToP(d)} >
                     :(</button>
 
                 <button className="input"
@@ -31,6 +62,7 @@ export default class Benched extends Component {
         })
 
         return (
+
             <div>
                 <h2>BENCHED</h2>
                 <div>
@@ -41,6 +73,12 @@ export default class Benched extends Component {
                     <p className="input"> Kill</p>
                 </div>
                 {fightersBenched}
+
+                <Modal open={open} onClose={this.onCloseModal} little>
+                    <p>Enter how much combatant failed by</p>
+                    <input 
+                        onChange={e => this.setState( { topAmount: e.target.value } ) } />
+                </Modal>
             </div >
         )
     }
