@@ -5,6 +5,8 @@ import Benched from "./3G/Benched";
 import Graveyard from "./3G/Graveyard"
 import Counter from "./3G/Counter"
 
+import AddNew from "./AddNew"
+
 export default class MainBody extends Component {
     constructor(props) {
         super(props)
@@ -47,8 +49,10 @@ export default class MainBody extends Component {
         this.state.fighterTotal.forEach(val => {
             if (val.action > this.state.count) {
                 val.acting = false
+            } else {
+                val.acting = true
                 val.top = false
-            } else {val.acting = true}
+            }
         })
 
         var newBench = [];
@@ -158,13 +162,14 @@ export default class MainBody extends Component {
 
         return (
 
-            <div>
-                <Counter
-                    increaseSpeed={this.increaseSpeed}
-                    decreaseSpeed={this.decreaseSpeed}
-                    resetCount={this.resetCount}
-                    count={this.state.count} />
-                <div>
+            <div className="mainBody">
+                <div className="left">
+                    <Counter
+                        increaseSpeed={this.increaseSpeed}
+                        decreaseSpeed={this.decreaseSpeed}
+                        resetCount={this.resetCount}
+                        count={this.state.count} />
+
                     <h1>The Quick</h1>
                     <Acting
                         active={this.state.fighterActive}
@@ -180,10 +185,13 @@ export default class MainBody extends Component {
                         handleHoldAction={this.handleHoldAction}
                         matchAction={this.matchAction}
                         sort={this.sort} />
+                </div>
+                
+                <div className="right">
+                    <AddNew />
                     <Graveyard
                         graveyard={this.state.graveyard}
                         resurrect={this.resurrect} />
-
                 </div>
             </div>
         )

@@ -1,10 +1,35 @@
 body {
-    margin: 75px;
+    margin: 75px 0;
+}
+
+.mainBody {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.left {
+    background: lavender;
+    max-width: 35%;
+    min-width: 550px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
+    background: lightblue;
+    display: flex;
+    flex-direction: column;
+    max-width: 35%;
+    min-width: 250px;
 }
 
 .input {
     display: inline-block;
-    min-width: 75px;
+    max-width: 60px;
+    margin: 5px 0;
+    min-width: 60px;
+    margin: 2px 5px;
 }
 
 .maindiv {
@@ -13,12 +38,23 @@ body {
 }
 
 .counter {
-    margin: 15px auto;
+    margin: 15px 0;
     background: lightyellow;
+    max-width: 35%;
+    min-width: 550px;
 }
 
-.input {
+.addNew {
+    width: 100%;
+    height: 150px;
+    background: lightgrey
+}
+
+#inputName {
+    background: lightgreen;
     min-width: 150px;
-    max-width: 150px;
-    margin: 5px 0;
+}
+
+.fighter {
+    background: lightcyan;
 }

@@ -44,7 +44,8 @@ export default class Acting extends Component {
         var fightersActive = this.props.active.map((d, i) => {
             return <div className='fighter' key={d.name + i + "acting"}>
 
-                <p key={d.name} className="input">{d.name}</p>
+                <p key={d.name} className="input"id="inputName">
+                    {d.name}</p>
 
                 <button
                     onClick={_ => this.props.fighterSpeed(d)}
@@ -70,7 +71,7 @@ export default class Acting extends Component {
             <div>
                 <h2>ACTING</h2>
                 <div>
-                    <p className="input"> Name</p>
+                    <p className="input" id="inputName"> Name</p>
                     <p className="input"> Speed</p>
                     <p className="input"> Action</p>
                     <p className="input"> ToP</p>

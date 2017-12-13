@@ -10,6 +10,7 @@ export default class Benched extends Component {
             open: false,
             fighterCell: {}
         }
+        this.topStyle = this.topStyle.bind(this)
     }
 
     onOpenModal = () => {
@@ -32,15 +33,27 @@ export default class Benched extends Component {
         this.setState( { fighterCell: d } )
     }
 
+    topStyle(d){
+        var divStyle = {}
+        if (d.top === true) {
+            divStyle = {background: 'lightcoral'}
+        }else{
+            divStyle = {}
+        }
+        return divStyle
+    }
 
     render() {
 
         const { open } = this.state;
 
         var fightersBenched = this.props.benched.map((d, i) => {
-            return <div key={d.name + i + "benched"} className='fighter'>
 
-                <p className="input">
+            let divStyle = this.topStyle(d)
+
+            return <div key={d.name + i + "benched"} className='fighter' style={divStyle}>
+
+                <p className="input" id="inputName">
                     {d.name}</p>
 
                 <button className="input"
@@ -66,7 +79,7 @@ export default class Benched extends Component {
             <div>
                 <h2>BENCHED</h2>
                 <div>
-                    <p className="input"> Name</p>
+                    <p className="input" id="inputName"> Name</p>
                     <p className="input"> Speed</p>
                     <p className="input"> Action</p>
                     <p className="input"> ToP</p>
