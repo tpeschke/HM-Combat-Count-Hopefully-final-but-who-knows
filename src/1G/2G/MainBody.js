@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Acting from "./3G/Acting";
 import Benched from "./3G/Benched";
@@ -12,11 +13,7 @@ export default class MainBody extends Component {
         super(props)
 
         this.state = {
-            fighterTotal:
-                [{ name: "Ragnar", speed: 5, action: 17, top: true, acting: true, dead: false },
-                { name: "Robert", speed: 7, action: 10, top: false, acting: true, dead: false },
-                { name: "Sir William", speed: 15, action: 25, top: true, acting: true, dead: true },
-                { name: "Ulrich VonLichstein", speed: 10, action: 1, top: false, acting: true, dead: false }],
+            fighterTotal: [],
             fighterActive: [],
             fighterBench: [],
             graveyard: [],
@@ -35,12 +32,28 @@ export default class MainBody extends Component {
         this.handleHoldAction = this.handleHoldAction.bind(this)
         this.onCloseModal = this.onCloseModal.bind(this)
         this.onOpenModal = this.onOpenModal.bind(this)
+        this.collectCombatants = this.collectCombatants.bind(this)
+        this.createFighter = this.createFighter.bind(this)
     }
 
+
+    //===============================================================================================================
+    //                                     SERVER IMPORT
+    //===============================================================================================================
     componentDidMount() {
-        this.sort();
+        this.collectCombatants();
     }
 
+    collectCombatants() {
+        axios.get('/api/fighters').then(res => {
+            this.setState({ fighterTotal: res.data }, this.sort)
+        })
+    }
+
+
+    //===============================================================================================================
+    //
+    //===============================================================================================================
     sort() {
 
         let sortedFigh = this.state.fighterTotal.sort((a, b) => a.action - b.action);
@@ -156,42 +169,74 @@ export default class MainBody extends Component {
     }
 
     //=====================================================================================================
+    //                                  Add New
+    //=====================================================================================================
+
+    createFighter(c, n, s, a) {
+        var tempArr = this.state.fighterTotal
+        tempArr.push(
+            {
+                color: c,
+                name: n,
+                speed: s,
+                action: a,
+                top: false,
+                acting: true,
+                dead: false
+            }
+        )
+        this.setState({ fighterTotal: tempArr })
+        setTimeout(this.sort(), 1000)
+        this.onCloseModal()
+    }
+
+
+    //=====================================================================================================
     //
     //=====================================================================================================
     render() {
 
         return (
 
-            <div className="mainBody">
-                <div className="left">
-                    <Counter
-                        increaseSpeed={this.increaseSpeed}
-                        decreaseSpeed={this.decreaseSpeed}
-                        resetCount={this.resetCount}
-                        count={this.state.count} />
+            <div className="mainBody" img src="./img/Woodbackground.png">
+                <div className="overlay">
+                    <div className="top">
+                        <Counter
+                            increaseSpeed={this.increaseSpeed}
+                            decreaseSpeed={this.decreaseSpeed}
+                            resetCount={this.resetCount}
+                            count={this.state.count} />
+                    </div>
 
-                    <h1>The Quick</h1>
-                    <Acting
-                        active={this.state.fighterActive}
-                        fighterSpeed={this.fighterSpeed}
-                        murder={this.murder}
-                        handleHoldAction={this.handleHoldAction}
-                        matchAction={this.matchAction}
-                        sort={this.sort} />
-                    <Benched
-                        benched={this.state.fighterBench}
-                        fighterSpeed={this.fighterSpeed}
-                        murder={this.murder}
-                        handleHoldAction={this.handleHoldAction}
-                        matchAction={this.matchAction}
-                        sort={this.sort} />
-                </div>
-                
-                <div className="right">
-                    <AddNew />
-                    <Graveyard
-                        graveyard={this.state.graveyard}
-                        resurrect={this.resurrect} />
+                    <div className="bottom">
+
+                        <div className="left">
+                            <h1>The Quick</h1>
+                            <Acting
+                                active={this.state.fighterActive}
+                                fighterSpeed={this.fighterSpeed}
+                                murder={this.murder}
+                                handleHoldAction={this.handleHoldAction}
+                                matchAction={this.matchAction}
+                                sort={this.sort} />
+                    
+                            <Benched
+                                benched={this.state.fighterBench}
+                                fighterSpeed={this.fighterSpeed}
+                                murder={this.murder}
+                                handleHoldAction={this.handleHoldAction}
+                                matchAction={this.matchAction}
+                                sort={this.sort} />
+                        </div>
+
+                        <div className="right">
+                            <AddNew
+                                createFighter={this.createFighter} />
+                            <Graveyard
+                                graveyard={this.state.graveyard}
+                                resurrect={this.resurrect} />
+                        </div>
+                    </div>
                 </div>
             </div>
         )

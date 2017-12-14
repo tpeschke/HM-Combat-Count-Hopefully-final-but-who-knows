@@ -1,60 +1,209 @@
+@import url('https://fonts.googleapis.com/css?family=Spectral+SC:400,800');
+
 body {
-    margin: 75px 0;
+    background: black;
 }
+
+
+.header {
+    display: flex;
+    justify-content:space-around; 
+    margin: 35px auto;
+    width: 900px;
+}
+
+.logo {
+    background-image: url('./img/logo.jpg');
+    height: 145px;
+    width: 425px;
+    background-repeat: no-repeat;
+    margin-left: 35px;
+}
+
+.headpic {
+    background-image: url('./img/Header.jpg');
+    height: 145px;
+    width: 425px;
+    background-repeat: no-repeat;
+    margin-right: 35px;
+    border-radius: 15px;
+}
+
+/* .overlay { */
+    /* background-color: rgba(173, 165, 135, 0.6);
+    background-blend-mode: multiply;
+    border-radius: 25px;
+} */
 
 .mainBody {
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    border-radius: 25px;
+    margin: 15px auto;
+    width: 900px;
+    padding: 15px 0 45px 0;
+    background-image: url('./img/Woodbackground.jpg');
 }
 
+.top {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.bottom {
+    display: flex;
+    
+}
 .left {
-    background: lavender;
+    padding: 25px 20px;
     max-width: 35%;
-    min-width: 550px;
+    min-width: 525px;
     display: flex;
     flex-direction: column;
+    margin: 20px auto;
+    background: #e8e4c1;
+    border-radius: 25px;
 }
 
 .right {
-    background: lightblue;
+    padding: 25px 20px;
     display: flex;
     flex-direction: column;
     max-width: 35%;
-    min-width: 250px;
+    min-width: 300px;
+    margin: 20px auto;
+    background: #e8e4c1;
+    border-radius: 25px;
 }
 
 .input {
-    display: inline-block;
     max-width: 60px;
-    margin: 5px 0;
     min-width: 60px;
     margin: 2px 5px;
 }
 
-.maindiv {
-    padding: 25px auto;
-    
+.counter {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
 }
 
-.counter {
-    margin: 15px 0;
-    background: lightyellow;
-    max-width: 35%;
-    min-width: 550px;
+
+.counterMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.counterSide {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 20vw;
 }
 
 .addNew {
     width: 100%;
     height: 150px;
-    background: lightgrey
 }
 
 #inputName {
-    background: lightgreen;
     min-width: 150px;
 }
 
 .fighter {
-    background: lightcyan;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    margin: 2px 0;
+}
+
+.fighters {
+    display: flex;
+    justify-content: center;
+}
+
+.graveyard {
+    min-width: 115px;
+}
+
+#color {
+    height: 15px;
+    border-radius: 15px;
+    min-width: 15px;
+    margin: 5px;
+    border: 2px solid white
+}
+
+#colorhead {
+    height: 15px;
+    border-radius: 15px;
+    min-width: 15px;
+    margin: 5px;
+}
+
+.border {
+    border-bottom: 1px solid rgb(0, 0, 0);
+    width: 225px;
+    margin: 0 auto;
+}
+
+.mainborder {
+    border-bottom: 1px solid rgb(0, 0, 0);
+    padding: 5px auto;
+}
+
+input {
+    text-align: center;
+    font-family: 'Spectral SC', serif;
+    border: none;
+    background: radial-gradient(#ffffff,#ffffff25,#ffffff00);
+    border-radius: 25px;
+}
+
+button {
+    text-align: center;
+    font-family: 'Spectral SC', serif;
+    border: none;
+    background: radial-gradient(#ffffff,#ffffff25,#ffffff00);
+    border-radius: 25px;;
+}
+
+button:hover {
+    background: radial-gradient(#ffffff,#ffffff75,#ffffff25);
+}
+
+.top {
+    margin: 5px;
+}
+
+.innerModal {
+    width: 50%;
+    height: auto;
+}
+
+/* =============================================== */
+h1 {
+    font-weight: 800;
+    font-size: 20px;
+    margin: 15px 0;
+    color: rgb(151, 23, 21);
+}
+
+h2 {
+    font-weight: 800;
+    font-size: 15px;
+    margin: 15px 0;
+    color: rgb(151, 23, 21);
+    border-bottom: 1px solid black
+}
+
+h3 {
+    font-weight: 800;
+    font-size: 15px;
+    margin: 15px 0;
+    color: black;
 }

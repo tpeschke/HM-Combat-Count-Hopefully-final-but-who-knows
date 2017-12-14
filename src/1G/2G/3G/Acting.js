@@ -8,7 +8,10 @@ export default class Acting extends Component {
         this.state = {
             topAmount: 0,
             open: false,
-            fighterCell: {}
+            fighterCell: {},
+            innerModal: {
+                background: "lightcoral"
+            }
         }
     }
 
@@ -41,10 +44,17 @@ export default class Acting extends Component {
 
         const { open } = this.state;
 
+
+
         var fightersActive = this.props.active.map((d, i) => {
+
+            let color = { background: d.color }
+
             return <div className='fighter' key={d.name + i + "acting"}>
 
-                <p key={d.name} className="input"id="inputName">
+                <p className="input" id="color" style={color}></p>
+
+                <p key={d.name} className="input" id="inputName">
                     {d.name}</p>
 
                 <button
@@ -64,25 +74,30 @@ export default class Acting extends Component {
                     onClick={_ => this.props.murder(d)}
                     className="input">
                     X</button>
-            </div>
+            </div >
         })
 
         return (
             <div>
                 <h2>ACTING</h2>
-                <div>
-                    <p className="input" id="inputName"> Name</p>
-                    <p className="input"> Speed</p>
-                    <p className="input"> Action</p>
-                    <p className="input"> ToP</p>
-                    <p className="input"> Kill</p>
+                <div className="fighters">
+                    <h3 className='input' id='colorhead'></h3>
+                    <h3 className="input" id="inputName"> Name</h3>
+                    <h3 className="input"> Speed</h3>
+                    <h3 className="input"> Action</h3>
+                    <h3 className="input"> ToP</h3>
+                    <h3 className="input"> Kill</h3>
                 </div>
                 {fightersActive}
 
-                <Modal open={open} onClose={this.onCloseModal} little>
-                    <p>Enter how much combatant failed by</p>
-                    <input
-                        onChange={e => this.setState({ topAmount: e.target.value })} />
+                <Modal open={open} onClose={this.onCloseModal} little className={this.state.innerModal}>
+                    <div>
+                        <section className="innerModal">
+                            <p>Enter how much combatant failed by</p>
+                            <input
+                                onChange={e => this.setState({ topAmount: e.target.value })} />
+                        </section>
+                    </div>
                 </Modal>
             </div >
         )
