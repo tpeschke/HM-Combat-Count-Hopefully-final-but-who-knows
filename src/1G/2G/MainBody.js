@@ -174,8 +174,10 @@ export default class MainBody extends Component {
 
     createFighter(c, n, s, a) {
         var tempArr = this.state.fighterTotal
+        var newId = Math.floor(Math.random() * 1000)
+
         tempArr.push(
-            {
+            {   fighterId: newId, 
                 color: c,
                 name: n,
                 speed: s,

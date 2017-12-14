@@ -10,8 +10,10 @@ class App extends Component {
     return (
       <div className="maindiv">
         <div className="header">
-            <div className="logo"></div>
-              <div className="headpic"></div>
+          <div className="logo">
+            <h4>Combat Counter</h4>
+          </div>
+          <div className="headpic"></div>
         </div>
         <MainBody />
       </div>

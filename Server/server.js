@@ -12,6 +12,7 @@ app.use( bodyParser.json() );
 
 
 app.get('/api/fighters', ctrl.read);
+app.delete('/api/fighters/:id', ctrl.delete);
 
 
 
@@ -20,5 +21,5 @@ const port = 5678;
 
 //========================================================
 app.listen(port, _=>{
-    console.log(`Up and running on port ${port}`)
+    console.log(`¯\\_(ツ)_/¯ ${port}`)
 })

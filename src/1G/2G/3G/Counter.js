@@ -26,7 +26,7 @@ export default class Acting extends Component {
         return (
             <div className="counter">
                 <div className="counterSide">
-                    <button
+                    <button id="button"
                         onClick={this.props.decreaseSpeed}>-</button>
                 </div>
 
@@ -35,9 +35,9 @@ export default class Acting extends Component {
 
                     <span className="border"></span>
                     
-                    <h1>{this.props.count}</h1>
+                    <h1 id="button">{this.props.count}</h1>
 
-                    <button className="top"
+                    <button className="top" 
                         onClick={this.props.resetCount}>reset</button>
                     <button className="top"
                         onClick={this.stopTime}>Stop AutoCount</button>
@@ -45,9 +45,9 @@ export default class Acting extends Component {
                 </div>
 
                 <div className="counterSide">
-                    <button
+                    <button id="button"
                         onClick={this.props.increaseSpeed}>+</button>
-                    <button
+                    <button id="button"
                         onClick={this.state.autoTimer1}>></button>
                 </div>
             </div>

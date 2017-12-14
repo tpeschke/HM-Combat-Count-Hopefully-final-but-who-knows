@@ -51,7 +51,7 @@ export default class AddNew extends Component {
 
         return (
             <div className="addNew">
-                <h1>Add New</h1>
+                <h1>Combat Workspace</h1>
                 <button
                     onClick={_ => this.onOpenModal()}
                 >Add New Combatant</button>
