@@ -14,7 +14,7 @@ app.use( bodyParser.json() );
 app.get('/api/fighters', ctrl.read);
 app.delete('/api/fighters/:id', ctrl.delete);
 app.delete('/api/fighters', ctrl.deleteAll);
-
+app.put('/api/fighters/:id', ctrl.updateFighter)
 
 
 const port = 5678;

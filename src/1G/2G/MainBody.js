@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import 'react-responsive-modal/lib/react-responsive-modal.css';
+import Modal from 'react-responsive-modal/lib/css';
+import { SketchPicker } from 'react-color';
 
 import Acting from "./3G/Acting";
 import Benched from "./3G/Benched";
@@ -7,6 +10,7 @@ import Graveyard from "./3G/Graveyard"
 import Counter from "./3G/Counter"
 
 import AddNew from "./AddNew"
+import { setTimeout } from 'timers';
 
 export default class MainBody extends Component {
     constructor(props) {
@@ -20,6 +24,13 @@ export default class MainBody extends Component {
             count: 1,
             actionHold: 0,
             topAmount: 0,
+            open: false,
+            fighterTemp: {
+                color: '#fff',
+                name: '',
+                speed: 0,
+                action: 0
+            }
         }
         this.sort = this.sort.bind(this)
         this.decreaseSpeed = this.decreaseSpeed.bind(this)
@@ -57,7 +68,14 @@ export default class MainBody extends Component {
     }
 
     clearField = () => {
-        axios.delete(`/api/fighters`).then( ( res, req) => {
+        axios.delete(`/api/fighters`).then((res, req) => {
+            this.setState({ fighterTotal: res.data }, this.sort)
+        })
+    }
+
+    handleEdit = () => {
+        var updatedFighter = this.state.fighterTemp;
+        axios.put(`/api/fighters/${updatedFighter}`).then( (res, req) => {
             this.setState( { fighterTotal: res.data }, this.sort )
         })
     }
@@ -181,7 +199,7 @@ export default class MainBody extends Component {
     }
 
     //=====================================================================================================
-    //                                  Add New
+    //                                  ADD NEW/EDIT OLD
     //=====================================================================================================
 
     createFighter(c, n, s, a) {
@@ -189,11 +207,12 @@ export default class MainBody extends Component {
         var newId = Math.floor(Math.random() * 1000)
 
         tempArr.push(
-            {   fighterId: newId, 
+            {
+                fighterId: newId,
                 color: c,
                 name: n,
                 speed: s,
-                action: a,
+                action: +a + this.state.count,
                 top: false,
                 acting: true,
                 dead: false
@@ -204,11 +223,42 @@ export default class MainBody extends Component {
         this.onCloseModal()
     }
 
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
+    modifyFighter = (f) => {
+        this.setState({ fighterTemp: f })
+        this.onOpenModal()
+    }
+
+    handleChange = (color, event) => {
+        let fighterTemp = Object.assign({}, this.state.fighterTemp);
+        fighterTemp.color = event.target.value;
+
+        this.setState( { fighterTemp } )
+
+        console.log(this.state.fighterTemp)
+    }
+
+    handleName = (name) => {
+        this.setState( {fighterTemp: Object.assign( {}, this.state.figtherTemp, {name: name} ) } )
+    }
+
+    handleSpeed = (speed) => {
+        this.setState( {fighterTemp: Object.assign( {}, this.state.figtherTemp, {speed: speed} ) } )
+    }
 
     //=====================================================================================================
     //
     //=====================================================================================================
     render() {
+
+        const { open } = this.state;
 
         return (
 
@@ -233,14 +283,15 @@ export default class MainBody extends Component {
                                 handleHoldAction={this.handleHoldAction}
                                 matchAction={this.matchAction}
                                 sort={this.sort} />
-                    
+
                             <Benched
                                 benched={this.state.fighterBench}
                                 fighterSpeed={this.fighterSpeed}
                                 murder={this.murder}
                                 handleHoldAction={this.handleHoldAction}
                                 matchAction={this.matchAction}
-                                sort={this.sort} />
+                                sort={this.sort}
+                                modifyFighter={this.modifyFighter} />
                         </div>
 
                         <div className="right">
@@ -254,6 +305,35 @@ export default class MainBody extends Component {
                         </div>
                     </div>
                 </div>
+                <Modal open={open} onClose={this.onCloseModal} little>
+                    <div className="outModalNew">
+                        <div className="modalBanner">
+                        </div >
+                        <div className="inModalNew">
+
+                            <div className="modalLeft">
+                                <SketchPicker
+                                    color={this.state.fighterTemp.color}
+                                    onChange={this.handleChange} />
+                            </div>
+
+                            <div className="modalRight">
+                                <h1 id="newCombat">Edit Combatant</h1>
+
+                                <p>Name</p>
+                                <input placeholder={this.state.fighterTemp.name} id="modalNewInput"
+                                    onChange={e => this.handleName(e.target.value)} />
+
+                                <p>Speed</p>
+                                <input placeholder={this.state.fighterTemp.speed} id="modalNewInput"
+                                    onChange={e => this.handleSpeed(e.target.value)} />
+
+                                <button id="modalNewButton"
+                                    onClick={_ => this.handleEdit()}>EDIT</button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
             </div>
         )
     }

@@ -26,6 +26,14 @@ module.exports = {
         fighters = []
 
         res.status(200).send(fighters)
+    },
+
+    updateFighter: (req, res) => {
+        const {name, speed, color} = req.body;
+
+
+        res.status(200).send(name)
+
     }
     
 }

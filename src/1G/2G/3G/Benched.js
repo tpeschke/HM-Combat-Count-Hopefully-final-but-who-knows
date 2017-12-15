@@ -47,6 +47,10 @@ export default class Benched extends Component {
         return divStyle
     }
 
+    editFighter = (d) => {
+        this.props.modifyFighter(d);
+    }
+
     render() {
 
         const { open } = this.state;
@@ -85,7 +89,7 @@ export default class Benched extends Component {
                     X</button>
 
                 <button className="input"
-                    onClick={_ => this.props.murder(d)} >
+                    onClick={_ => this.editFighter(d)} >
                     O</button>
             </div>
         })
