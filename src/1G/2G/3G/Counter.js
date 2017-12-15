@@ -27,6 +27,12 @@ export default class Acting extends Component {
             <div className="counter">
                 <div className="counterSide">
                     <button id="button"
+                        //should be the reset symbol instead of 0
+                        onClick={this.props.resetCount}>0</button>
+                    <button id="button"
+                        //figure out how to get < in there without breaking it
+                        onClick={this.stopTime}>&lt;</button>
+                    <button id="button"
                         onClick={this.props.decreaseSpeed}>-</button>
                 </div>
 
@@ -34,13 +40,8 @@ export default class Acting extends Component {
                     <h1>The Count</h1>
 
                     <span className="border"></span>
-                    
-                    <h1 id="button">{this.props.count}</h1>
 
-                    <button className="top" 
-                        onClick={this.props.resetCount}>reset</button>
-                    <button className="top"
-                        onClick={this.stopTime}>Stop AutoCount</button>
+                    <h1 id="button">{this.props.count}</h1>
 
                 </div>
 
@@ -49,6 +50,8 @@ export default class Acting extends Component {
                         onClick={this.props.increaseSpeed}>+</button>
                     <button id="button"
                         onClick={this.state.autoTimer1}>></button>
+                    <button id="button"
+                        onClick={this.state.autoTimer1}>>></button>
                 </div>
             </div>
         )

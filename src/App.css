@@ -238,15 +238,61 @@ button:hover {
 
 .outModalNew {
     display: flex;
-    background: rgba(218, 197, 182, .75);
+    flex-direction: column;
+    background-color:rgba(218, 197, 182, 1);
     margin: -20px;
+    width: 500px;
+    height: auto;
+    position: relative;
 }
 
 .modalBanner {
     background-image: url('./img/AddNew.png');
-    height: 401px;
+    height: 200px;
     width: 1000px;
     background-repeat: no-repeat;
+}
+
+.inModalNew {
+    display: flex;
+}
+
+.modalLeft {
+    margin: 15px;
+}
+
+.modalRight {
+    margin: 0 25px 0 27px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#newCombat {
+    color: rgba(33, 53, 80, 1);
+    margin-top: 40px;
+    text-align: center;
+}
+
+#modalNewInput {
+    margin-top: 25px;
+    max-width: 150px;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 13px;
+    height: 20px;
+    color: rgba(33, 53, 80, 1);
+}
+
+#modalNewButton {
+    margin-top: 50px;
+    background: rgba(33, 53, 80, 1);
+    color: rgba(218, 197, 182, 1);
+    width: 75px;
+    height: 25px;
+    border-radius: 7px;
+    font-family: 'MedievalSharp';
 }
 
 /* =============================================== */

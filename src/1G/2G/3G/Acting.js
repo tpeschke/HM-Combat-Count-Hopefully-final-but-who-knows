@@ -92,12 +92,12 @@ export default class Acting extends Component {
                 {fightersActive}
 
                 <Modal open={open} onClose={this.onCloseModal} little className={this.state.innerModal}>
-                    <div>
-                        <section className="innerModal">
-                            <p>Enter how much combatant failed by</p>
-                            <input
+                    <div className="modalOuter">
+                        <div className="modalInner">
+                            <p id="modalWord">Enter how much combatant failed by</p>
+                            <input id="modalInput"
                                 onChange={e => this.setState({ topAmount: e.target.value })} />
-                        </section>
+                        </div>
                     </div>
                 </Modal>
             </div >

@@ -64,27 +64,33 @@ export default class AddNew extends Component {
                     <button
                         onClick={_ => this.killAll()}
                     >Clear Field</button>
+                    <button
+                        onClick={_ => this.killAll()}
+                    >Status Timer</button>
                 </div>
 
                 <Modal open={open} onClose={this.onCloseModal} little>
                     <div className="outModalNew">
                         <div className="modalBanner">
-                        </div>
-                        <div>
-                            <h1>Add New Combatant</h1>
-                            <SketchPicker
-                                color={this.state.color}
-                                onChange={this.handleChange} />
-                        </div>
-                        <div>
-                            <input placeholder="Name"
-                                onChange={e => this.handleName(e.target.value)} />
-                            <input placeholder="Speed"
-                                onChange={e => this.handleSpeed(e.target.value)} />
-                            <input placeholder="Starting Initiative"
-                                onChange={e => this.handleAction(e.target.value)} />
-                            <button
-                                onClick={_ => this.handleSubmit()}>Submit</button>
+                        </div >
+                        <div className="inModalNew">
+
+                            <div className="modalLeft">
+                                <SketchPicker
+                                    color={this.state.color}
+                                    onChange={this.handleChange} />
+                            </div>
+                            <div className="modalRight">
+                                <h1 id="newCombat">Add New Combatant</h1>
+                                <input placeholder="Name" id="modalNewInput"
+                                    onChange={e => this.handleName(e.target.value)} />
+                                <input placeholder="Speed"id="modalNewInput"
+                                    onChange={e => this.handleSpeed(e.target.value)} />
+                                <input placeholder="Initiative" id="modalNewInput"
+                                    onChange={e => this.handleAction(e.target.value)} />
+                                <button id="modalNewButton"
+                                    onClick={_ => this.handleSubmit()}>SUBMIT</button>
+                            </div>
                         </div>
                     </div>
                 </Modal>
