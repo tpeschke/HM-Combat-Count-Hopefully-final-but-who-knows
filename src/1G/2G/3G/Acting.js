@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Modal from 'react-responsive-modal';
+import 'react-responsive-modal/lib/react-responsive-modal.css';
+import Modal from 'react-responsive-modal/lib/css';
 
 export default class Acting extends Component {
     constructor() {

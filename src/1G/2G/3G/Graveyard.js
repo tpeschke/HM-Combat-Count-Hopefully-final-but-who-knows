@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 
 export default class Graveyard extends Component {
 
-    removeFighter = (e) => {
-        axios.delete(`/api/fighters/${e}`).then((res, req) => {
-            console.log(res.data)
-        })
+    removeFighterG = (e) => {
+        this.props.removeFighter(e)
     }
 
 
@@ -24,7 +21,7 @@ export default class Graveyard extends Component {
                     :)</button>
 
                 <button
-                    onClick={_ => this.removeFighter(d.fighterID)}
+                    onClick={_ => this.removeFighterG(d.fighterId)}
                     className="input" id="graveyard">
                     D:</button>
             </div>

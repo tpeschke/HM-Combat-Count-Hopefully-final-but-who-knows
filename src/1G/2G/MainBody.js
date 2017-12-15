@@ -38,7 +38,7 @@ export default class MainBody extends Component {
 
 
     //===============================================================================================================
-    //                                     SERVER IMPORT
+    //                                     SERVER THINGS
     //===============================================================================================================
     componentDidMount() {
         this.collectCombatants();
@@ -50,9 +50,21 @@ export default class MainBody extends Component {
         })
     }
 
+    removeFighter = (e) => {
+        axios.delete(`/api/fighters/${e}`).then((res, req) => {
+            this.setState({ fighterTotal: res.data }, this.sort)
+        })
+    }
+
+    clearField = () => {
+        axios.delete(`/api/fighters`).then( ( res, req) => {
+            this.setState( { fighterTotal: res.data }, this.sort )
+        })
+    }
+
 
     //===============================================================================================================
-    //
+    //                                 SORT
     //===============================================================================================================
     sort() {
 
@@ -233,10 +245,12 @@ export default class MainBody extends Component {
 
                         <div className="right">
                             <AddNew
-                                createFighter={this.createFighter} />
+                                createFighter={this.createFighter}
+                                clearField={this.clearField} />
                             <Graveyard
                                 graveyard={this.state.graveyard}
-                                resurrect={this.resurrect} />
+                                resurrect={this.resurrect}
+                                removeFighter={this.removeFighter} />
                         </div>
                     </div>
                 </div>

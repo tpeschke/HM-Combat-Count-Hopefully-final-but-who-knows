@@ -13,6 +13,7 @@ app.use( bodyParser.json() );
 
 app.get('/api/fighters', ctrl.read);
 app.delete('/api/fighters/:id', ctrl.delete);
+app.delete('/api/fighters', ctrl.deleteAll);
 
 
 

@@ -10,9 +10,22 @@ module.exports = {
 
     delete: (req, res) => {
         
-        var id = req.data
+        var {params} = req;
 
-        res.status(200).send(console.log(id))
+        fighters.forEach((val, i) => {
+            if (val.fighterId == params.id) {
+                fighters.splice(i,1)
+            }
+        })
+    
+        res.status(200).send(fighters)
+    },
+
+    deleteAll: (req, res) => {
+        
+        fighters = []
+
+        res.status(200).send(fighters)
     }
     
 }
