@@ -21,17 +21,20 @@ export default class MainBody extends Component {
             fighterActive: [],
             fighterBench: [],
             graveyard: [],
+
             count: 1,
             actionHold: 0,
             topAmount: 0,
             open: false,
-            fighterTemp: {
-                color: '#fff',
-                name: '',
-                speed: 0,
-                action: 0
-            }
+
+            tempId: 0,
+            tempColor: '#fff',
+            tempName: '',
+            tempSpeed: 0,
+            tempAction: 0
+
         }
+
         this.sort = this.sort.bind(this)
         this.decreaseSpeed = this.decreaseSpeed.bind(this)
         this.increaseSpeed = this.increaseSpeed.bind(this)
@@ -74,10 +77,20 @@ export default class MainBody extends Component {
     }
 
     handleEdit = () => {
-        var updatedFighter = this.state.fighterTemp;
-        axios.put(`/api/fighters/${updatedFighter}`).then( (res, req) => {
-            this.setState( { fighterTotal: res.data }, this.sort )
+
+        var updatedFighter = {
+            fighterId: this.state.tempId,
+            color: this.state.tempColor,
+            name: this.state.tempName,
+            speed: this.state.tempSpeed,
+            action: this.state.tempAction,
+        }
+
+        axios.post(`/api/fighters/`, updatedFighter).then((res, req) => {
+
+            this.setState({ fighterTotal: res.data }, this.sort)
         })
+        this.onCloseModal()
     }
 
 
@@ -231,26 +244,29 @@ export default class MainBody extends Component {
         this.setState({ open: false });
     };
 
-    modifyFighter = (f) => {
-        this.setState({ fighterTemp: f })
+    modifyFighter = (i, c, n, s, a) => {
+
+        this.setState({
+            tempId: i,
+            tempColor: c,
+            tempName: n,
+            tempSpeed: s,
+            tempAction: a
+        })
+
         this.onOpenModal()
     }
 
-    handleChange = (color, event) => {
-        let fighterTemp = Object.assign({}, this.state.fighterTemp);
-        fighterTemp.color = event.target.value;
-
-        this.setState( { fighterTemp } )
-
-        console.log(this.state.fighterTemp)
+    handleChange = (color) => {
+        this.setState({ tempColor: color.hex })
     }
 
     handleName = (name) => {
-        this.setState( {fighterTemp: Object.assign( {}, this.state.figtherTemp, {name: name} ) } )
+        this.setState({ tempName: name })
     }
 
     handleSpeed = (speed) => {
-        this.setState( {fighterTemp: Object.assign( {}, this.state.figtherTemp, {speed: speed} ) } )
+        this.setState({ tempSpeed: speed })
     }
 
     //=====================================================================================================
@@ -282,7 +298,8 @@ export default class MainBody extends Component {
                                 murder={this.murder}
                                 handleHoldAction={this.handleHoldAction}
                                 matchAction={this.matchAction}
-                                sort={this.sort} />
+                                sort={this.sort}
+                                modifyFighter={this.modifyFighter} />
 
                             <Benched
                                 benched={this.state.fighterBench}
@@ -313,19 +330,20 @@ export default class MainBody extends Component {
 
                             <div className="modalLeft">
                                 <SketchPicker
-                                    color={this.state.fighterTemp.color}
+                                    color={this.state.tempColor}
                                     onChange={this.handleChange} />
                             </div>
 
                             <div className="modalRight">
                                 <h1 id="newCombat">Edit Combatant</h1>
+                                <p>You may leave a field blank, if you'd like</p>
 
                                 <p>Name</p>
-                                <input placeholder={this.state.fighterTemp.name} id="modalNewInput"
+                                <input placeholder={this.state.tempName} id="modalNewInput"
                                     onChange={e => this.handleName(e.target.value)} />
 
                                 <p>Speed</p>
-                                <input placeholder={this.state.fighterTemp.speed} id="modalNewInput"
+                                <input placeholder={this.state.tempSpeed} id="modalNewInput"
                                     onChange={e => this.handleSpeed(e.target.value)} />
 
                                 <button id="modalNewButton"

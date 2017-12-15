@@ -14,7 +14,7 @@ app.use( bodyParser.json() );
 app.get('/api/fighters', ctrl.read);
 app.delete('/api/fighters/:id', ctrl.delete);
 app.delete('/api/fighters', ctrl.deleteAll);
-app.put('/api/fighters/:id', ctrl.updateFighter)
+app.post('/api/fighters/', ctrl.updateFighter)
 
 
 const port = 5678;
@@ -22,5 +22,5 @@ const port = 5678;
 
 //========================================================
 app.listen(port, _=>{
-    console.log(`¯\\_(ツ)_/¯ ${port}`)
+    console.log(`I live, I die, I live again ${port}`)
 })

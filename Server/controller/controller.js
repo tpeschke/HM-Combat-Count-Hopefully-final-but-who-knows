@@ -29,10 +29,19 @@ module.exports = {
     },
 
     updateFighter: (req, res) => {
-        const {name, speed, color} = req.body;
 
+        const {fighterId, name, color, speed, action} = req.body;
+    
+        fighters.forEach(val => {
+            if (val.fighterId === fighterId) {
+                name != val.name ? val.name = name : null;
+                color != val.color ? val.color = color : null;
+                speed != val.speed ? val.speed = speed : null;
+                val.action = action
+            }
+        })
 
-        res.status(200).send(name)
+        res.status(200).send(fighters)
 
     }
     

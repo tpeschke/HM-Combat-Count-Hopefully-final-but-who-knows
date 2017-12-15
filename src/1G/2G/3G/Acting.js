@@ -41,6 +41,12 @@ export default class Acting extends Component {
         e.target.value = ''
     }
 
+    editFighter = (d) => {
+        var { fighterId, color, name, speed, action } = d
+
+        this.props.modifyFighter(fighterId, color, name, speed, action);
+    }
+
     render() {
 
         const { open } = this.state;
@@ -75,6 +81,10 @@ export default class Acting extends Component {
                     onClick={_ => this.props.murder(d)}
                     className="input">
                     X</button>
+
+                <button className="input"
+                    onClick={_ => this.editFighter(d)} >
+                    O</button>
             </div >
         })
 
@@ -88,6 +98,7 @@ export default class Acting extends Component {
                     <h3 className="input"> Action</h3>
                     <h3 className="input"> ToP</h3>
                     <h3 className="input"> Kill</h3>
+                    <h3 className="input"> Edit</h3>
                 </div>
                 {fightersActive}
 

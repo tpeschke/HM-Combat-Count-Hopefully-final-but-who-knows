@@ -48,7 +48,9 @@ export default class Benched extends Component {
     }
 
     editFighter = (d) => {
-        this.props.modifyFighter(d);
+        var { fighterId, color, name, speed, action } = d
+
+        this.props.modifyFighter(fighterId,color,name,speed, action);
     }
 
     render() {
