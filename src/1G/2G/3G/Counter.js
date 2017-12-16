@@ -5,21 +5,25 @@ export default class Acting extends Component {
         super(props)
 
         this.state = {
-            autoTimer1: function () { setInterval(props.increaseSpeed, 1000) }
+            timeId: 0
         }
 
-        // this.autoTimer1 = this.autoTimer1.bind(this)
         this.stopTime = this.stopTime.bind(this)
     }
-
+        
     stopTime() {
-        console.log(this.state.autoTimer1)
-        clearInterval(this.state.autoTimer1);
+        clearInterval(this.state.timeId);
     }
 
-    // autoTimer1() {
+    autoTimer1 = () => {
+        
+        this.setState( { timeId: setInterval(this.props.increaseSpeed, 1000) } )
+    }
 
-    // }
+    autoTimer2 = () => {
+        
+        this.setState( { timeId: setInterval(this.props.increaseSpeed, 500) } )
+    }
 
     render() {
 
@@ -31,7 +35,7 @@ export default class Acting extends Component {
                         onClick={this.props.resetCount}>0</button>
                     <button id="button"
                         //figure out how to get < in there without breaking it
-                        onClick={this.stopTime}>&lt;</button>
+                        onClick={this.stopTime}>X</button>
                     <button id="button"
                         onClick={this.props.decreaseSpeed}>-</button>
                 </div>
@@ -49,9 +53,9 @@ export default class Acting extends Component {
                     <button id="button"
                         onClick={this.props.increaseSpeed}>+</button>
                     <button id="button"
-                        onClick={this.state.autoTimer1}>></button>
+                        onClick={this.autoTimer1}>></button>
                     <button id="button"
-                        onClick={this.state.autoTimer1}>>></button>
+                        onClick={this.autoTimer2}>>></button>
                 </div>
             </div>
         )

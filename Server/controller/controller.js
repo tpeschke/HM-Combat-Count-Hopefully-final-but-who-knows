@@ -42,7 +42,12 @@ module.exports = {
         })
 
         res.status(200).send(fighters)
+    },
 
+    createFighter: (req, res) => {
+
+        fighters.push(req.body)
+        res.status(200).send(fighters)
     }
     
 }

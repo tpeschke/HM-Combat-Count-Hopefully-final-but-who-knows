@@ -6,11 +6,11 @@ import { SketchPicker } from 'react-color';
 
 import Acting from "./3G/Acting";
 import Benched from "./3G/Benched";
-import Graveyard from "./3G/Graveyard"
-import Counter from "./3G/Counter"
+import Graveyard from "./3G/Graveyard";
+import Counter from "./3G/Counter";
 
 import AddNew from "./AddNew"
-import { setTimeout } from 'timers';
+import StatusTimer from './StatusTimer';
 
 export default class MainBody extends Component {
     constructor(props) {
@@ -216,10 +216,10 @@ export default class MainBody extends Component {
     //=====================================================================================================
 
     createFighter(c, n, s, a) {
-        var tempArr = this.state.fighterTotal
+
         var newId = Math.floor(Math.random() * 1000)
 
-        tempArr.push(
+        var newFighter =
             {
                 fighterId: newId,
                 color: c,
@@ -230,9 +230,15 @@ export default class MainBody extends Component {
                 acting: true,
                 dead: false
             }
-        )
-        this.setState({ fighterTotal: tempArr })
-        setTimeout(this.sort(), 1000)
+
+        axios.post('/api/fighter', newFighter).then((res, req) => {
+
+            this.setState({ fighterTotal: res.data })
+
+        })
+
+        setTimeout(this.sort, 1000)
+
         this.onCloseModal()
     }
 
@@ -321,10 +327,11 @@ export default class MainBody extends Component {
                                 removeFighter={this.removeFighter} />
                         </div>
                     </div>
+
                 </div>
                 <Modal open={open} onClose={this.onCloseModal} little>
                     <div className="outModalNew">
-                        <div className="modalBanner">
+                        <div className="modalBannerEdit">
                         </div >
                         <div className="inModalNew">
 
@@ -336,14 +343,14 @@ export default class MainBody extends Component {
 
                             <div className="modalRight">
                                 <h1 id="newCombat">Edit Combatant</h1>
-                                <p>You may leave a field blank, if you'd like</p>
+                                <p id="editSubtitle">You may leave a field blank, if you'd like</p>
 
-                                <p>Name</p>
-                                <input placeholder={this.state.tempName} id="modalNewInput"
+                                <p id="editmark">Name</p>
+                                <input placeholder={this.state.tempName} id="editinput"
                                     onChange={e => this.handleName(e.target.value)} />
 
-                                <p>Speed</p>
-                                <input placeholder={this.state.tempSpeed} id="modalNewInput"
+                                <p id="editmark">Speed</p>
+                                <input placeholder={this.state.tempSpeed} id="editinput"
                                     onChange={e => this.handleSpeed(e.target.value)} />
 
                                 <button id="modalNewButton"
@@ -352,6 +359,9 @@ export default class MainBody extends Component {
                         </div>
                     </div>
                 </Modal>
+
+                <StatusTimer
+                    count={this.state.count} />
             </div>
         )
     }

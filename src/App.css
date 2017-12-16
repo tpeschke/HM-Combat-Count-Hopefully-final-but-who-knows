@@ -30,12 +30,6 @@ body {
     border-radius: 15px;
 }
 
-/* .overlay { */
-    /* background-color: rgba(173, 165, 135, 0.6);
-    background-blend-mode: multiply;
-    border-radius: 25px;
-} */
-
 .mainBody {
     display: flex;
     flex-direction: column;
@@ -241,7 +235,7 @@ button:hover {
     flex-direction: column;
     background-color:rgba(218, 197, 182, 1);
     margin: -20px;
-    width: 500px;
+    width: 499px;
     height: auto;
     position: relative;
 }
@@ -250,6 +244,13 @@ button:hover {
     background-image: url('./img/AddNew.png');
     height: 200px;
     width: 1000px;
+    background-repeat: no-repeat;
+}
+
+.modalBannerEdit {
+    background-image: url('./img/edit.jpg');
+    height: 200px;
+    width: 999px;
     background-repeat: no-repeat;
 }
 
@@ -295,6 +296,45 @@ button:hover {
     font-family: 'MedievalSharp';
 }
 
+#editSubtitle {
+    font-size: 10px;
+    text-align: center;
+}
+
+#editmark {
+    margin-top: 15px;
+    font-size: 17px;
+}
+
+#editinput {
+    margin-top: 10px;
+    max-width: 150px;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 13px;
+    height: 20px;
+    color: rgba(33, 53, 80, 1);
+}
+
+.statusOuter {
+    position: fixed;
+    bottom: 0;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.statusInner {
+    background: rgba(252, 227, 210, 0.75);
+    padding: 10px 10px 5px 10px;
+    min-width: 125px;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin: 0 15px;
+}
+
 /* =============================================== */
 h1 {
     font-weight: 800;
@@ -332,4 +372,17 @@ h4 {
         1px -1px 0 #000,
         -1px 1px 0 #000,
         1px 1px 0 #000; 
+}
+
+h5 {
+    font-weight: 800;
+    font-size: 15px;
+    color: rgb(103, 21, 151);
+    border-bottom: 1px solid black
+}
+
+h6 {
+    font-size: 25px;
+    font-family: 'MedievalSharp';
+    margin-top: 5px;
 }
