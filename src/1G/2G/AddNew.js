@@ -50,6 +50,12 @@ export default class AddNew extends Component {
         this.props.clearField()
     }
 
+    openStatus = () => {
+
+        this.props.onOpenStatus()
+
+    }
+
     render() {
 
         const { open } = this.state;
@@ -65,7 +71,7 @@ export default class AddNew extends Component {
                         onClick={_ => this.killAll()}
                     >Clear Field</button>
                     <button
-                        onClick={_ => this.killAll()}
+                        onClick={_ => this.openStatus()}
                     >Status Timer</button>
                 </div>
 

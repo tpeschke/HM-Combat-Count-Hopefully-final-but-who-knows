@@ -31,7 +31,11 @@ export default class MainBody extends Component {
             tempColor: '#fff',
             tempName: '',
             tempSpeed: 0,
-            tempAction: 0
+            tempAction: 0,
+
+            openStatus: false,
+            nameHold: '',
+            timeHold: 0
 
         }
 
@@ -274,6 +278,26 @@ export default class MainBody extends Component {
     handleSpeed = (speed) => {
         this.setState({ tempSpeed: speed })
     }
+    //=====================================================================================================
+    //                                 STATUS
+    //=====================================================================================================
+
+    onOpenStatus = () => {
+        this.setState({ openStatus: true });
+    };
+
+    onCloseStatus = () => {
+        this.setState({ openStatus: false });
+    };
+
+    handleName = (e) => {
+        this.setState( { nameHold: e } )
+    }
+
+    handleStatus = (e) => {
+        this.setState( { timeHold: +e + 1 } )
+        console.log(this.state.timeHold)
+    }
 
     //=====================================================================================================
     //
@@ -281,6 +305,7 @@ export default class MainBody extends Component {
     render() {
 
         const { open } = this.state;
+        const { openStatus } = this.state;
 
         return (
 
@@ -320,7 +345,8 @@ export default class MainBody extends Component {
                         <div className="right">
                             <AddNew
                                 createFighter={this.createFighter}
-                                clearField={this.clearField} />
+                                clearField={this.clearField}
+                                onOpenStatus={this.onOpenStatus} />
                             <Graveyard
                                 graveyard={this.state.graveyard}
                                 resurrect={this.resurrect}
@@ -329,6 +355,7 @@ export default class MainBody extends Component {
                     </div>
 
                 </div>
+
                 <Modal open={open} onClose={this.onCloseModal} little>
                     <div className="outModalNew">
                         <div className="modalBannerEdit">
@@ -359,6 +386,14 @@ export default class MainBody extends Component {
                         </div>
                     </div>
                 </Modal>
+
+                <div>
+                    <Modal open={openStatus} onClose={this.onCloseStatus} little>
+                        <input placeholder="Status Name" onChange={e=>this.handleName(e.target.value)} />
+                        <input placeholder="Status Time" onChange={e=>this.handleStatus(e.target.value)} />
+                        <button>Submit</button>
+                    </Modal>
+                </div>
 
                 <StatusTimer
                     count={this.state.count} />

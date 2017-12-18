@@ -34,7 +34,6 @@ export default class Acting extends Component {
                         //should be the reset symbol instead of 0
                         onClick={this.props.resetCount}>0</button>
                     <button id="button"
-                        //figure out how to get < in there without breaking it
                         onClick={this.stopTime}>X</button>
                     <button id="button"
                         onClick={this.props.decreaseSpeed}>-</button>

@@ -15,7 +15,9 @@ app.get('/api/fighters', ctrl.read);
 app.delete('/api/fighters/:id', ctrl.delete);
 app.delete('/api/fighters', ctrl.deleteAll);
 app.post('/api/fighters', ctrl.updateFighter);
-app.post('/api/fighter', ctrl.createFighter)
+app.post('/api/fighter', ctrl.createFighter);
+
+app.get('/api/statuses', ctrl.readStatus);
 
 
 const port = 5678;
