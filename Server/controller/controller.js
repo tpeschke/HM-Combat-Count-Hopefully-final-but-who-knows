@@ -3,8 +3,8 @@ var fighters = [    { fighterId: 0, color: '#FF0000', name: "Ragnar", speed: 5, 
                     { fighterId: 2, color: '#FF0000', name: "Sir William", speed: 15, action: 25, top: true, acting: true, dead: true },
                     { fighterId: 3, color: '#FF0000', name: "Ulrich VonLichstein", speed: 10, action: 1, top: false, acting: true, dead: false }]
 
-var statuses = [    { name: 'BLINDNESS', time: 30 },
-                    { name: 'FIRE', time: 15 } ]
+var statuses = [    { statId: 2, name: 'BLINDNESS', time: 30 },
+                    { statId: 15, name: 'FIRE', time: 15 } ]
 
 module.exports = {
     read: (req, res) => {
@@ -64,7 +64,8 @@ module.exports = {
     },
 
     createStatus: (req, res) => {
-
+        statuses.push(req.body)
+        res.status(200).send(statuses)
     }
 
 }

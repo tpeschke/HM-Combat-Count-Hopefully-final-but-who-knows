@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import 'react-responsive-modal/lib/react-responsive-modal.css';
-import Modal from 'react-responsive-modal/lib/css';
+
 import axios from 'axios';
 
 export default class StatusTimer extends Component {
@@ -22,7 +21,7 @@ export default class StatusTimer extends Component {
     componentWillReceiveProps() {
         this.state.status.map((d, i) => {
 
-            if ( (d.time - this.props.count ) === 0) {
+            if ( d.time === 0) {
                 var tempArr = this.state.status;
 
                 tempArr.splice(i, 1)
@@ -43,7 +42,7 @@ export default class StatusTimer extends Component {
 
                 <h5>{d.name}</h5>
 
-                <h6>{d.time - this.props.count}</h6>
+                <h6>{d.time}</h6>
 
             </button>
         })

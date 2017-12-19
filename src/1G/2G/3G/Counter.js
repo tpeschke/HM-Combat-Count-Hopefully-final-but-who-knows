@@ -16,12 +16,12 @@ export default class Acting extends Component {
     }
 
     autoTimer1 = () => {
-        
+        clearInterval(this.state.timeId) 
         this.setState( { timeId: setInterval(this.props.increaseSpeed, 1000) } )
     }
 
     autoTimer2 = () => {
-        
+        clearInterval(this.state.timeId)
         this.setState( { timeId: setInterval(this.props.increaseSpeed, 500) } )
     }
 

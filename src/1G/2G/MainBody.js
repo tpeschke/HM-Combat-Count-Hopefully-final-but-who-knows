@@ -98,6 +98,8 @@ export default class MainBody extends Component {
     }
 
 
+
+
     //===============================================================================================================
     //                                 SORT
     //===============================================================================================================
@@ -299,6 +301,23 @@ export default class MainBody extends Component {
         console.log(this.state.timeHold)
     }
 
+    submitStatus = _ => {
+
+        var newId = Math.floor(Math.random() * 1000)
+
+        var newStatus = {
+            statId: newId,
+            name: this.state.nameHold,
+            time: +this.state.timeHold - 1
+        }
+
+        axios.post('/api/statuses', newStatus).then( res => {
+            
+        })
+
+        this.onCloseStatus()
+    }
+
     //=====================================================================================================
     //
     //=====================================================================================================
@@ -391,7 +410,7 @@ export default class MainBody extends Component {
                     <Modal open={openStatus} onClose={this.onCloseStatus} little>
                         <input placeholder="Status Name" onChange={e=>this.handleName(e.target.value)} />
                         <input placeholder="Status Time" onChange={e=>this.handleStatus(e.target.value)} />
-                        <button>Submit</button>
+                        <button onClick={_=>this.submitStatus()}>Submit</button>
                     </Modal>
                 </div>
 

@@ -18,6 +18,7 @@ app.post('/api/fighters', ctrl.updateFighter);
 app.post('/api/fighter', ctrl.createFighter);
 
 app.get('/api/statuses', ctrl.readStatus);
+app.post('/api/statuses', ctrl.createStatus);
 
 
 const port = 5678;
