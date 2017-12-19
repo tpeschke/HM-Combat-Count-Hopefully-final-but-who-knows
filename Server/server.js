@@ -19,6 +19,7 @@ app.post('/api/fighter', ctrl.createFighter);
 
 app.get('/api/statuses', ctrl.readStatus);
 app.post('/api/statuses', ctrl.createStatus);
+app.delete('/api/statuses/:id', ctrl.deleteStatus)
 
 
 const port = 5678;

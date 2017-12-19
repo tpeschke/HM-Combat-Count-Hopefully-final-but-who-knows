@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
-export default class Acting extends Component {
+import { connect } from 'react-redux';
+import { increaseCount, decreaseCount, resetCount } from '../../../ducks/reducer'
+import { setTimeout } from 'timers';
+
+class Counter extends Component {
     constructor(props) {
         super(props)
 
@@ -8,35 +12,36 @@ export default class Acting extends Component {
             timeId: 0
         }
 
-        this.stopTime = this.stopTime.bind(this)
     }
-        
-    stopTime() {
+ 
+    stopTime = () => {
         clearInterval(this.state.timeId);
     }
 
     autoTimer1 = () => {
         clearInterval(this.state.timeId) 
-        this.setState( { timeId: setInterval(this.props.increaseSpeed, 1000) } )
+        this.setState( { timeId: setInterval(this.props.increaseCount, 1000) } )
     }
 
     autoTimer2 = () => {
         clearInterval(this.state.timeId)
-        this.setState( { timeId: setInterval(this.props.increaseSpeed, 500) } )
+        this.setState( { timeId: setInterval(this.props.increaseCount, 500) } )
     }
 
     render() {
+
+        const { increaseCount, decreaseCount, resetCount } = this.props
 
         return (
             <div className="counter">
                 <div className="counterSide">
                     <button id="button"
                         //should be the reset symbol instead of 0
-                        onClick={this.props.resetCount}>0</button>
+                        onClick={resetCount}>0</button>
                     <button id="button"
                         onClick={this.stopTime}>X</button>
                     <button id="button"
-                        onClick={this.props.decreaseSpeed}>-</button>
+                        onClick={decreaseCount}>-</button>
                 </div>
 
                 <div className="counterMain">
@@ -50,7 +55,7 @@ export default class Acting extends Component {
 
                 <div className="counterSide">
                     <button id="button"
-                        onClick={this.props.increaseSpeed}>+</button>
+                        onClick={increaseCount}>+</button>
                     <button id="button"
                         onClick={this.autoTimer1}>></button>
                     <button id="button"
@@ -60,3 +65,21 @@ export default class Acting extends Component {
         )
     }
 }
+
+function mapStateToProps ( state ) {
+
+    var { count } = state
+
+    return {
+        count
+    }
+}
+
+let actionBuilers = {
+    increaseCount, 
+    decreaseCount, 
+    resetCount
+}
+
+
+export default connect( mapStateToProps, actionBuilers )( Counter )

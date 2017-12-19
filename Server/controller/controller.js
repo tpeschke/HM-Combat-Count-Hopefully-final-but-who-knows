@@ -1,7 +1,9 @@
-var fighters = [    { fighterId: 0, color: '#FF0000', name: "Ragnar", speed: 5, action: 17, top: true, acting: true, dead: false },
-                    { fighterId: 1, color: '#FF0000', name: "Robert", speed: 7, action: 10, top: false, acting: true, dead: false },
-                    { fighterId: 2, color: '#FF0000', name: "Sir William", speed: 15, action: 25, top: true, acting: true, dead: true },
-                    { fighterId: 3, color: '#FF0000', name: "Ulrich VonLichstein", speed: 10, action: 1, top: false, acting: true, dead: false }]
+var fighters = { total: [   { fighterId: 0, color: '#FF0000', name: "Ragnar", speed: 5, action: 17, top: true, acting: true, dead: false },
+                            { fighterId: 1, color: '#FF0000', name: "Robert", speed: 7, action: 10, top: false, acting: true, dead: false },
+                            { fighterId: 2, color: '#FF0000', name: "Sir William", speed: 15, action: 25, top: true, acting: true, dead: true },
+                            { fighterId: 3, color: '#FF0000', name: "Ulrich VonLichstein", speed: 10, action: 1, top: false, acting: true, dead: false }
+                        ]
+                }
 
 var statuses = [    { statId: 2, name: 'BLINDNESS', time: 30 },
                     { statId: 15, name: 'FIRE', time: 15 } ]
@@ -61,6 +63,15 @@ module.exports = {
 
     deleteStatus: (req, res) => {
 
+        var { params } = req;
+
+        statuses.forEach( (val, i) => {
+            if (val.statId == params.id ) {
+                statuses.splice(i,1)
+            }
+        })
+
+        res.status(200).send(statuses)
     },
 
     createStatus: (req, res) => {

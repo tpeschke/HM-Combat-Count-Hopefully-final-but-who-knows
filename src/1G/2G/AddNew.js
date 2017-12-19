@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import 'react-responsive-modal/lib/react-responsive-modal.css';
 import Modal from 'react-responsive-modal/lib/css';
 import { SketchPicker } from 'react-color';
+import axios from 'axios';
+
+import StatusTimer from './StatusTimer';
 
 export default class AddNew extends Component {
     constructor() {
@@ -12,7 +15,11 @@ export default class AddNew extends Component {
             color: '#fff',
             name: '',
             speed: 0,
-            action: 0
+            action: 0,
+
+            openStatus: false,
+            nameHold: '',
+            timeHold: 0,
         }
     }
 
@@ -51,14 +58,16 @@ export default class AddNew extends Component {
     }
 
     openStatus = () => {
-
-        this.props.onOpenStatus()
-
+        
     }
+    
+
 
     render() {
 
         const { open } = this.state;
+
+        const { openStatus } = this.state;
 
         return (
             <div className="addNew">
@@ -100,6 +109,18 @@ export default class AddNew extends Component {
                         </div>
                     </div>
                 </Modal>
+
+                <div>
+                    <Modal open={openStatus} onClose={this.onCloseStatus} little>
+                        <input placeholder="Status Name" onChange={e=>this.handleName(e.target.value)} />
+                        <input placeholder="Status Time" onChange={e=>this.handleStatus(e.target.value)} />
+                        <button onClick={_=>this.submitStatus()}>Submit</button>
+                    </Modal>
+                </div>
+
+                <StatusTimer
+                    count={this.state.count} />
+                
             </div>
         )
     }

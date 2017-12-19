@@ -4,45 +4,21 @@ import 'react-responsive-modal/lib/react-responsive-modal.css';
 import Modal from 'react-responsive-modal/lib/css';
 import { SketchPicker } from 'react-color';
 
+import { connect } from 'react-redux';
+
 import Acting from "./3G/Acting";
 import Benched from "./3G/Benched";
 import Graveyard from "./3G/Graveyard";
 import Counter from "./3G/Counter";
 
 import AddNew from "./AddNew"
-import StatusTimer from './StatusTimer';
 
-export default class MainBody extends Component {
+import { sort } from './3G/sort'
+
+class MainBody extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            fighterTotal: [],
-            fighterActive: [],
-            fighterBench: [],
-            graveyard: [],
-
-            count: 1,
-            actionHold: 0,
-            topAmount: 0,
-            open: false,
-
-            tempId: 0,
-            tempColor: '#fff',
-            tempName: '',
-            tempSpeed: 0,
-            tempAction: 0,
-
-            openStatus: false,
-            nameHold: '',
-            timeHold: 0
-
-        }
-
-        this.sort = this.sort.bind(this)
-        this.decreaseSpeed = this.decreaseSpeed.bind(this)
-        this.increaseSpeed = this.increaseSpeed.bind(this)
-        this.resetCount = this.resetCount.bind(this)
         this.fighterSpeed = this.fighterSpeed.bind(this)
         this.murder = this.murder.bind(this)
         this.resurrect = this.resurrect.bind(this)
@@ -64,96 +40,37 @@ export default class MainBody extends Component {
 
     collectCombatants() {
         axios.get('/api/fighters').then(res => {
-            this.setState({ fighterTotal: res.data }, this.sort)
+            this.setprops({ fighterTotal: res.data }, this.sort)
         })
     }
 
     removeFighter = (e) => {
         axios.delete(`/api/fighters/${e}`).then((res, req) => {
-            this.setState({ fighterTotal: res.data }, this.sort)
+            this.setprops({ fighterTotal: res.data }, this.sort)
         })
     }
 
     clearField = () => {
         axios.delete(`/api/fighters`).then((res, req) => {
-            this.setState({ fighterTotal: res.data }, this.sort)
+            this.setprops({ fighterTotal: res.data }, this.sort)
         })
     }
 
     handleEdit = () => {
 
         var updatedFighter = {
-            fighterId: this.state.tempId,
-            color: this.state.tempColor,
-            name: this.state.tempName,
-            speed: this.state.tempSpeed,
-            action: this.state.tempAction,
+            fighterId: this.props.tempId,
+            color: this.props.tempColor,
+            name: this.props.tempName,
+            speed: this.props.tempSpeed,
+            action: this.props.tempAction,
         }
 
         axios.post(`/api/fighters/`, updatedFighter).then((res, req) => {
 
-            this.setState({ fighterTotal: res.data }, this.sort)
+            this.setprops({ fighterTotal: res.data }, this.sort)
         })
         this.onCloseModal()
-    }
-
-
-
-
-    //===============================================================================================================
-    //                                 SORT
-    //===============================================================================================================
-    sort() {
-
-        let sortedFigh = this.state.fighterTotal.sort((a, b) => a.action - b.action);
-        this.setState({ fighterTotal: sortedFigh });
-
-        this.state.fighterTotal.forEach(val => {
-            if (val.action > this.state.count) {
-                val.acting = false
-            } else {
-                val.acting = true
-                val.top = false
-            }
-        })
-
-        var newBench = [];
-        var newActing = [];
-        var newGrave = [];
-
-
-        this.state.fighterTotal.forEach(val => {
-            if (val.acting === true && val.dead === false) {
-                newActing.push(val)
-            } else if (val.acting === false && val.dead === false) {
-                newBench.push(val)
-            } else (
-                newGrave.push(val)
-            )
-        })
-
-        this.setState({ fighterActive: newActing })
-        this.setState({ fighterBench: newBench })
-        this.setState({ graveyard: newGrave })
-
-    }
-
-    // ==================================================================================================
-    //          COUNT
-    //===================================================================================================
-
-    increaseSpeed() {
-        this.setState({ count: this.state.count + 1 }, this.sort)
-    }
-
-    decreaseSpeed() {
-        if (this.state.count > 1) {
-            this.setState({ count: this.state.count - 1 }, this.sort)
-        }
-    }
-
-    resetCount() {
-        this.setState({ count: 1 }, this.sort)
     }
 
     // ==================================================================================================
@@ -161,7 +78,7 @@ export default class MainBody extends Component {
     //===================================================================================================
 
     fighterSpeed(f) {
-        this.state.fighterTotal.forEach(val => {
+        this.props.fighterTotal.forEach(val => {
             if (val.name === f.name) {
                 val.action = val.speed + val.action;
             }
@@ -170,11 +87,11 @@ export default class MainBody extends Component {
     }
 
     handleHoldAction(e) {
-        this.setState({ actionHold: e })
+        this.setprops({ actionHold: e })
     }
 
     matchAction(f, input) {
-        this.state.fighterTotal.forEach(val => {
+        this.props.fighterTotal.forEach(val => {
             if (val.name === f.name) {
                 val.action = +input
             }
@@ -187,11 +104,11 @@ export default class MainBody extends Component {
     //===================================================================================================
 
     onOpenModal = () => {
-        this.setState({ open: true });
+        this.setprops({ open: true });
     };
 
     onCloseModal = () => {
-        this.setState({ open: false });
+        this.setprops({ open: false });
     };
 
 
@@ -200,7 +117,7 @@ export default class MainBody extends Component {
     //====================================================================================================
 
     murder(f) {
-        this.state.fighterTotal.forEach(val => {
+        this.props.fighterTotal.forEach(val => {
             if (val.name === f.name) {
                 val.dead = true;
             }
@@ -209,7 +126,7 @@ export default class MainBody extends Component {
     }
 
     resurrect(f) {
-        this.state.fighterTotal.forEach(val => {
+        this.props.fighterTotal.forEach(val => {
             if (val.name === f.name) {
                 val.dead = false;
             }
@@ -231,7 +148,7 @@ export default class MainBody extends Component {
                 color: c,
                 name: n,
                 speed: s,
-                action: +a + this.state.count,
+                action: +a + this.props.count,
                 top: false,
                 acting: true,
                 dead: false
@@ -239,7 +156,7 @@ export default class MainBody extends Component {
 
         axios.post('/api/fighter', newFighter).then((res, req) => {
 
-            this.setState({ fighterTotal: res.data })
+            this.setprops({ fighterTotal: res.data })
 
         })
 
@@ -249,16 +166,16 @@ export default class MainBody extends Component {
     }
 
     onOpenModal = () => {
-        this.setState({ open: true });
+        this.setprops({ open: true });
     };
 
     onCloseModal = () => {
-        this.setState({ open: false });
+        this.setprops({ open: false });
     };
 
     modifyFighter = (i, c, n, s, a) => {
 
-        this.setState({
+        this.setprops({
             tempId: i,
             tempColor: c,
             tempName: n,
@@ -270,61 +187,25 @@ export default class MainBody extends Component {
     }
 
     handleChange = (color) => {
-        this.setState({ tempColor: color.hex })
+        this.setprops({ tempColor: color.hex })
     }
 
     handleName = (name) => {
-        this.setState({ tempName: name })
+        this.setprops({ tempName: name })
     }
 
     handleSpeed = (speed) => {
-        this.setState({ tempSpeed: speed })
-    }
-    //=====================================================================================================
-    //                                 STATUS
-    //=====================================================================================================
-
-    onOpenStatus = () => {
-        this.setState({ openStatus: true });
-    };
-
-    onCloseStatus = () => {
-        this.setState({ openStatus: false });
-    };
-
-    handleName = (e) => {
-        this.setState( { nameHold: e } )
+        this.setprops({ tempSpeed: speed })
     }
 
-    handleStatus = (e) => {
-        this.setState( { timeHold: +e + 1 } )
-        console.log(this.state.timeHold)
-    }
-
-    submitStatus = _ => {
-
-        var newId = Math.floor(Math.random() * 1000)
-
-        var newStatus = {
-            statId: newId,
-            name: this.state.nameHold,
-            time: +this.state.timeHold - 1
-        }
-
-        axios.post('/api/statuses', newStatus).then( res => {
-            
-        })
-
-        this.onCloseStatus()
-    }
 
     //=====================================================================================================
     //
     //=====================================================================================================
     render() {
 
-        const { open } = this.state;
-        const { openStatus } = this.state;
+        const { open } = this.props;
+        
 
         return (
 
@@ -332,10 +213,7 @@ export default class MainBody extends Component {
                 <div className="overlay">
                     <div className="top">
                         <Counter
-                            increaseSpeed={this.increaseSpeed}
-                            decreaseSpeed={this.decreaseSpeed}
-                            resetCount={this.resetCount}
-                            count={this.state.count} />
+                            sort = {this.sort} />
                     </div>
 
                     <div className="bottom">
@@ -343,7 +221,7 @@ export default class MainBody extends Component {
                         <div className="left">
                             <h1>The Quick</h1>
                             <Acting
-                                active={this.state.fighterActive}
+                                active={this.props.fighterActive}
                                 fighterSpeed={this.fighterSpeed}
                                 murder={this.murder}
                                 handleHoldAction={this.handleHoldAction}
@@ -352,7 +230,7 @@ export default class MainBody extends Component {
                                 modifyFighter={this.modifyFighter} />
 
                             <Benched
-                                benched={this.state.fighterBench}
+                                benched={this.props.fighterBench}
                                 fighterSpeed={this.fighterSpeed}
                                 murder={this.murder}
                                 handleHoldAction={this.handleHoldAction}
@@ -365,9 +243,11 @@ export default class MainBody extends Component {
                             <AddNew
                                 createFighter={this.createFighter}
                                 clearField={this.clearField}
-                                onOpenStatus={this.onOpenStatus} />
+                                onOpenStatus={this.onOpenStatus}
+                                newStatuses={this.props.statuses}
+                                count={this.props.count} />
                             <Graveyard
-                                graveyard={this.state.graveyard}
+                                graveyard={this.props.graveyard}
                                 resurrect={this.resurrect}
                                 removeFighter={this.removeFighter} />
                         </div>
@@ -383,7 +263,7 @@ export default class MainBody extends Component {
 
                             <div className="modalLeft">
                                 <SketchPicker
-                                    color={this.state.tempColor}
+                                    color={this.props.tempColor}
                                     onChange={this.handleChange} />
                             </div>
 
@@ -392,11 +272,11 @@ export default class MainBody extends Component {
                                 <p id="editSubtitle">You may leave a field blank, if you'd like</p>
 
                                 <p id="editmark">Name</p>
-                                <input placeholder={this.state.tempName} id="editinput"
+                                <input placeholder={this.props.tempName} id="editinput"
                                     onChange={e => this.handleName(e.target.value)} />
 
                                 <p id="editmark">Speed</p>
-                                <input placeholder={this.state.tempSpeed} id="editinput"
+                                <input placeholder={this.props.tempSpeed} id="editinput"
                                     onChange={e => this.handleSpeed(e.target.value)} />
 
                                 <button id="modalNewButton"
@@ -406,18 +286,40 @@ export default class MainBody extends Component {
                     </div>
                 </Modal>
 
-                <div>
-                    <Modal open={openStatus} onClose={this.onCloseStatus} little>
-                        <input placeholder="Status Name" onChange={e=>this.handleName(e.target.value)} />
-                        <input placeholder="Status Time" onChange={e=>this.handleStatus(e.target.value)} />
-                        <button onClick={_=>this.submitStatus()}>Submit</button>
-                    </Modal>
-                </div>
-
-                <StatusTimer
-                    count={this.state.count} />
+                
             </div>
         )
     }
 }
 
+
+
+function moveFrompropsToProps ( props ) {
+    
+    var { fighterTotal, fighterActive, fighterBench, graveyard, count, actionHold, topAmount, open, tempId, tempColor, tempName, tempSpeed, tempAction } = props
+    
+    return {
+        fighterTotal,
+        fighterActive,
+        fighterBench,
+        graveyard,
+        count, 
+        actionHold, 
+        topAmount, 
+        open, 
+        tempId, 
+        tempColor, 
+        tempName, 
+        tempSpeed, 
+        tempAction
+    } 
+}
+
+let actionBuilder = {
+
+}
+
+
+let connectApp = connect( moveFrompropsToProps, actionBuilder )
+
+export default connectApp(MainBody)
