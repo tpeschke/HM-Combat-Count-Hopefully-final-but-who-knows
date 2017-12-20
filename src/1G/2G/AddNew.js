@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'react-responsive-modal/lib/react-responsive-modal.css';
 import Modal from 'react-responsive-modal/lib/css';
 import { SketchPicker } from 'react-color';
-import axios from 'axios';
 
 import StatusTimer from './StatusTimer';
 

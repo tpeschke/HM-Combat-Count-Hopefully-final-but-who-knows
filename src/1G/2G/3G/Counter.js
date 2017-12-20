@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { increaseCount, decreaseCount, resetCount } from '../../../ducks/reducer'
-import { setTimeout } from 'timers';
 
 class Counter extends Component {
     constructor(props) {

@@ -1,8 +1,8 @@
-export function sort(input) {
+export function sort(input, count) {
     input.total = input.total.sort((a, b) => a.action - b.action);
 
     input.total.forEach(val => {
-        if (val.action > this.props.count) {
+        if (val.action > count) {
             val.acting = false
         } else {
             val.acting = true
@@ -26,7 +26,7 @@ export function sort(input) {
     })
 
     var fighters = {
-        total: fighters.total,
+        total: input.total,
         acting: acting,
         bench: bench,
         grave: grave

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 // import Benched from "./3G/Benched";
 // import Graveyard from "./3G/Graveyard";
 import Counter from "./3G/Counter";
-import AddNew from "./AddNew"
+// import AddNew from "./AddNew"
 
 import { sort } from './3G/sort'
 import { collectCombat } from '../../ducks/reducer'
@@ -33,7 +33,10 @@ class MainBody extends Component {
 
     componentDidMount() {
         this.props.collectCombat()
-        setTimeout( this.props.sort(), 1000)
+    }
+
+    componentWillReceiveProps(nextprops) {
+        
     }
 
     removeFighter = (e) => {
@@ -197,7 +200,7 @@ class MainBody extends Component {
     render() {
 
         const { open } = this.props;
-        
+
 
         return (
 
@@ -288,9 +291,10 @@ class MainBody extends Component {
 
 function moveFrompropsToProps ( props ) {
     
-    var { count, actionHold, topAmount, open, tempId, tempColor, tempName, tempSpeed, tempAction } = props
+    var { fighters, count, actionHold, topAmount, open, tempId, tempColor, tempName, tempSpeed, tempAction } = props
     
     return {
+        fighters,
         count, 
         actionHold, 
         topAmount, 

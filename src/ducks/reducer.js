@@ -80,7 +80,7 @@ export default function reducer(state = initialState, action) {
 
         //===========================================================\\
 
-        case COLLECT_COMBAT + '_FULLFILED':
+        case COLLECT_COMBAT + '_FULFILLED':
             return Object.assign({}, state, { fighters: action.payload } )
 
         default: return state;
