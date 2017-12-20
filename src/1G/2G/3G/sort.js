@@ -1,7 +1,7 @@
-export function sort(total) {
-    let sortedFigh = fighters.total.sort((a, b) => a.action - b.action);
+export function sort(input) {
+    input.total = input.total.sort((a, b) => a.action - b.action);
 
-    fighters.total.forEach(val => {
+    input.total.forEach(val => {
         if (val.action > this.props.count) {
             val.acting = false
         } else {
@@ -15,7 +15,7 @@ export function sort(total) {
     var grave = [];
 
 
-    fighters.total.forEach(val => {
+    input.total.forEach(val => {
         if (val.acting === true && val.dead === false) {
             acting.push(val)
         } else if (val.acting === false && val.dead === false) {
@@ -25,12 +25,14 @@ export function sort(total) {
         )
     })
 
-    return fighters = {
-        total: total,
+    var fighters = {
+        total: fighters.total,
         acting: acting,
         bench: bench,
         grave: grave
     }
+
+    return fighters
 }
 
 

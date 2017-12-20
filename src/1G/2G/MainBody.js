@@ -6,14 +6,15 @@ import { SketchPicker } from 'react-color';
 
 import { connect } from 'react-redux';
 
-import Acting from "./3G/Acting";
-import Benched from "./3G/Benched";
-import Graveyard from "./3G/Graveyard";
+// import Acting from "./3G/Acting";
+// import Benched from "./3G/Benched";
+// import Graveyard from "./3G/Graveyard";
 import Counter from "./3G/Counter";
-
 import AddNew from "./AddNew"
 
 import { sort } from './3G/sort'
+import { collectCombat } from '../../ducks/reducer'
+import { setTimeout } from 'timers';
 
 class MainBody extends Component {
     constructor(props) {
@@ -26,22 +27,13 @@ class MainBody extends Component {
         this.handleHoldAction = this.handleHoldAction.bind(this)
         this.onCloseModal = this.onCloseModal.bind(this)
         this.onOpenModal = this.onOpenModal.bind(this)
-        this.collectCombatants = this.collectCombatants.bind(this)
         this.createFighter = this.createFighter.bind(this)
     }
 
 
-    //===============================================================================================================
-    //                                     SERVER THINGS
-    //===============================================================================================================
     componentDidMount() {
-        this.collectCombatants();
-    }
-
-    collectCombatants() {
-        axios.get('/api/fighters').then(res => {
-            this.setprops({ fighterTotal: res.data }, this.sort)
-        })
+        this.props.collectCombat()
+        setTimeout( this.props.sort(), 1000)
     }
 
     removeFighter = (e) => {
@@ -220,27 +212,27 @@ class MainBody extends Component {
 
                         <div className="left">
                             <h1>The Quick</h1>
-                            <Acting
+                            {/* <Acting
                                 active={this.props.fighterActive}
                                 fighterSpeed={this.fighterSpeed}
                                 murder={this.murder}
                                 handleHoldAction={this.handleHoldAction}
                                 matchAction={this.matchAction}
                                 sort={this.sort}
-                                modifyFighter={this.modifyFighter} />
+                                modifyFighter={this.modifyFighter} /> */}
 
-                            <Benched
+                            {/* <Benched
                                 benched={this.props.fighterBench}
                                 fighterSpeed={this.fighterSpeed}
                                 murder={this.murder}
                                 handleHoldAction={this.handleHoldAction}
                                 matchAction={this.matchAction}
                                 sort={this.sort}
-                                modifyFighter={this.modifyFighter} />
+                                modifyFighter={this.modifyFighter} /> */}
                         </div>
 
                         <div className="right">
-                            <AddNew
+                            {/* <AddNew
                                 createFighter={this.createFighter}
                                 clearField={this.clearField}
                                 onOpenStatus={this.onOpenStatus}
@@ -249,7 +241,7 @@ class MainBody extends Component {
                             <Graveyard
                                 graveyard={this.props.graveyard}
                                 resurrect={this.resurrect}
-                                removeFighter={this.removeFighter} />
+                                removeFighter={this.removeFighter} /> */}
                         </div>
                     </div>
 
@@ -296,13 +288,9 @@ class MainBody extends Component {
 
 function moveFrompropsToProps ( props ) {
     
-    var { fighterTotal, fighterActive, fighterBench, graveyard, count, actionHold, topAmount, open, tempId, tempColor, tempName, tempSpeed, tempAction } = props
+    var { count, actionHold, topAmount, open, tempId, tempColor, tempName, tempSpeed, tempAction } = props
     
     return {
-        fighterTotal,
-        fighterActive,
-        fighterBench,
-        graveyard,
         count, 
         actionHold, 
         topAmount, 
@@ -316,7 +304,7 @@ function moveFrompropsToProps ( props ) {
 }
 
 let actionBuilder = {
-
+    collectCombat
 }
 
 
