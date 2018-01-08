@@ -22,7 +22,7 @@ app.post('/api/statuses', ctrl.createStatus);
 app.delete('/api/statuses/:id', ctrl.deleteStatus)
 
 
-const port = 5678;
+const port = 5670;
 
 
 //========================================================
